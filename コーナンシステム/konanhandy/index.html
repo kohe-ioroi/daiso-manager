@@ -1,0 +1,40 @@
+<html lang="ja">
+<head>
+    <title>HT089</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta charset="UTF-8">
+    <script src="/__/firebase/8.2.2/firebase-app.js"></script>
+    <script src="/__/firebase/8.2.2/firebase-analytics.js"></script>
+    <script src="/__/firebase/8.2.3/firebase-auth.js"></script>
+    <script src="/__/firebase/8.2.3/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/3.5.2/firebase-ui-auth__ja.js"></script>
+    <script src="/__/firebase/init.js"></script>
+	<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="icon.png">
+    <script src="js/lib/jquery.min.js" type="text/javascript"></script>
+    <script src="js/lib/quagga.min.js" type="text/javascript"></script>
+    <script src="js/main.js" type="text/javascript"></script>
+    <link rel="manifest" id="my-manifest"/>
+</head>
+	<body style="visibility:hidden" onLoad="document.body.style.visibility='visible'">
+	<div id="firebaseui-auth-container"></div>
+    <div id=load>
+        <img src="img/loading.gif">
+        <p class="center">通信中</p>
+    </div>
+    <div id=main class="hideme">
+        <h3 id="userid" class="center">ﾐﾆﾊﾝﾃﾞｨ</h3>
+        <div id="input-area" class="center">
+            <form onsubmit="return false;" action="">
+                <input type="tel" id="jancode" name="jan_code" placeholder="JANコード" autocomplete="off" maxlength="13" style="width:13em;height:30px;font-size: 100%;">
+                <button style="height:30px; width:50px;"onclick="sendRequest_input()">検索</button>
+            </form>
+        </div>
+        <div class="center"><progress id="scanprogress" value="0" max="5" style="width:50%;height:30px;"></progress><p>↑ゲージが最大になるまでかざす↑</p><p>↓読み取りにくい時はバーコードを動かす↓</p></div>
+        <div id="photo-area" class="viewport"></div>
+    </div>
+    <div id="fadeLayer"></div>
+</body>
+</html>

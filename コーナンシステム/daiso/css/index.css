@@ -1,0 +1,185 @@
+#photo-area.viewport canvas, video {
+   position:absolute;
+   margin:auto;
+   width:70%;
+   height: 50%;
+   margin-right:10%;
+   margin-left:10%;
+   
+}
+#main{
+   width:90%;
+   margin-right: auto;
+   margin-left : auto;
+}
+#load{
+   display: none;
+   position:absolute;
+   top:0;
+   bottom:0;
+   left:0;
+   right:0;
+   margin:auto;
+   width:100px;
+   height:100px;
+}
+body{
+   width:100%;
+   margin-right:auto;
+   margin-left:auto;
+}
+.center{
+   text-align: center;
+   }
+
+#fadeLayer {
+   position:absolute;
+   top:0px;
+   left:0px;
+   
+   width:100%;
+   height:100%;
+   
+   background-color:#000000;
+   opacity:0.9;
+   visibility:hidden;
+   z-index:1;
+   }
+#list-area{
+	width:80%;
+	height:30%;
+	position:fixed;
+	bottom:0;
+}
+.fixed_buttonarea{
+   position:fixed;
+   bottom:10px;
+   width:100%;
+   height:15%;
+   font-size:1em;
+   text-align:center;
+ }
+ .fixed_buttons{
+  position: relative;
+  width:24%;
+  height:100%;
+  padding:5px 5px;
+  font-size:3.5vw;
+}
+/* モーダルCSS */
+.modalArea {
+   display: none;
+   position: fixed;
+   z-index: 10; /*サイトによってここの数値は調整 */
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+ }
+ 
+ .modalBg {
+   width: 100%;
+   height: 100%;
+   background-color: rgba(30,30,30,0.9);
+ }
+ 
+ .modalWrapper {
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform:translate(-50%,-50%);
+   width: 70%;
+   height:50%;
+   max-width: 500px;
+   padding: 10px 30px;
+   background-color: #fff;
+ }
+ 
+ .closeModal {
+   position: absolute;
+   top: 0.5rem;
+   right: 1rem;
+   cursor: pointer;
+ }
+ div#paging
+    {
+      text-align: center;
+      /* スクロールに対してページングボックスの位置を固定 */
+      position: fixed;
+      /* 位置を指定 */
+      bottom: 0;
+      right:45%;
+    }
+
+    div#pagingbox{
+      background: #FFF;
+    }
+
+    th{
+      /* ヘッダ背景塗りつぶし */
+      background: #eee;
+    }
+   th,td {
+     /* 枠線を1本線指定 */
+      border: solid 1px;
+      width:auto;
+   }
+
+   table{
+     /* 枠線を1本線指定 */
+      border: solid 1px;
+      border-collapse:  collapse;
+      white-space: nowrap;
+    }
+
+    footer{
+      position: fixed;
+      width: 100%;
+      background-color: #C0C0C0;
+      padding: 15px 0;
+      bottom: 0; /*下に固定*/
+    }
+
+  .mainbutton{
+  font-size: 1.5em;
+  font-weight: bold;
+  padding:10px 30px;
+  width:100%;
+}
+.stockbutton{
+  font-size: 1.3em;
+  font-weight: bold;
+  padding:10px 20px;
+}
+button {
+  touch-action: manipulation;
+}
+table {
+  width:100%;
+}
+tr {
+  text-align: center;
+}
+.popup {
+  font-size:1.3em;
+  position: fixed;
+  bottom: 100%;
+  left: 0px;
+  right: 0px;
+  transform: translateY(0%);
+  padding: 1em;
+  margin: 0px;
+  background-color: #3388DD;
+  color: #fff;
+  text-align: center;
+  opacity: 0;
+  transition: 0.3s;
+  z-index:999;
+}
+.popup.js_active {
+  transform: translateY(100%);
+  opacity: 1;
+}
+.hiddenme {
+  display:none;
+}

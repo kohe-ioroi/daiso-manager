@@ -1,0 +1,49 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "Main": {
+      ".read": "auth != null",
+      ".write": "auth != null",
+      ".indexOn": [
+        "JAN"
+      ]
+    },
+    "Daiso": {
+      ".read": "auth !== null",
+      ".write": "auth !== null",
+      ".indexOn": [
+        "JAN",
+        "Daiban"
+      ]
+    },
+    "Daiso_Master": {
+      ".read": "auth !== null",
+      ".write": "auth !== null",
+      ".indexOn": [
+        "JAN"
+      ]
+    },
+    "Daiso_Limit": {
+      ".read": "auth !== null",
+      ".write": "auth !== null",
+      ".indexOn": [
+        "JAN"
+      ]
+    },
+    "Daiso_import": {
+      ".read": "auth !== null",
+      ".write": "auth !== null",
+      ".indexOn": [
+        "itemcode"
+      ]
+    },
+    "Daiso_HTData": {
+      ".read": "auth !== null",
+      ".write": "auth !== null",
+      ".indexOn": [
+        "JAN"
+      ]
+    }
+  }
+}

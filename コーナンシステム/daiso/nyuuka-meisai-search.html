@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>DAISO(089)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+    <script src="/__/firebase/8.2.2/firebase-app.js"></script>
+    <script src="/__/firebase/8.2.2/firebase-analytics.js"></script>
+    <script src="/__/firebase/8.2.3/firebase-auth.js"></script>
+    <script src="/__/firebase/8.2.3/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/3.5.2/firebase-ui-auth__ja.js"></script>
+    <script src="/__/firebase/init.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="icon.png">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="js/lib/jquery.columns.min.js"></script>
+    <script src="js/lib/quagga.min.js" type="text/javascript"></script>
+    <script src="js/nyuuka-meisai-search.js" type="text/javascript"></script>
+    <script src="js/init.js" type="text/javascript"></script>
+    <script src="js/beep.js" type="text/javascript"></script>
+
+    <link rel="stylesheet" href="css/clean.css">
+</head>
+
+<body class="blurBg-false" style="background-color:#EBEBEB">
+    <div id="firebaseui-auth-container"></div>
+    <div id=load>
+        <img src="images/loading.gif">
+        <p id="message" class="center">処理中</p>
+    </div>
+    <center>
+        <h2>入出荷明細データDiff</h2>
+    </center>
+    <!-- Start Formoid form-->
+    <link rel="stylesheet" href="main_files/formoid1/formoid-solid-green.css" type="text/css" />
+    <form id="main" class="formoid-solid-green hideme" autocomplete="off" onsubmit="dowork();return false;"
+        style="background-color:#FFFFFF;font-size:16px;font-family:'Roboto',Arial,Helvetica,sans-serif;color:#34495E;max-width:480px;min-width:150px"
+        method="post">
+        <div class="element-input">
+            <label class="title">PDF内テキストをコピペ</label>
+            <div class="item-cont">
+                <textarea id="pdf-text"></textarea>
+                <span class="icon-place"></span>
+            </div>
+        </div>
+        <div><button onclick="dowork()">チェックを開始</button></div>
+        <div class="hideme" id="columns"></div>
+        <div class="submit">
+        </div>
+    </form>
+    <script type="text/javascript" src="main_files/formoid1/formoid-solid-green.js"></script>
+    <!-- Stop Formoid form-->
+    <section id="modalArea" class="modalArea">
+        <div id="modalBg" class="modalBg"></div>
+        <div class="modalWrapper">
+            <div class="modalContents">
+                <div id="photo-area" class="hideme viewport"></div>
+            </div>
+            <div id="closeModal" class="closeModal">
+                ×
+            </div>
+        </div>
+    </section>
+    <p class="popup">MSG</p>
+
+</body>
+
+</html>

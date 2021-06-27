@@ -1,0 +1,17 @@
+{
+  "projects": {
+    "default": "konan089-a83b7"
+  },
+  "targets": {
+    "konan089-a83b7": {
+      "hosting": {
+        "DAISO": [
+          "daiso-konan089"
+        ],
+        "HANDY": [
+          "konan089-a83b7"
+        ]
+      }
+    }
+  }
+}

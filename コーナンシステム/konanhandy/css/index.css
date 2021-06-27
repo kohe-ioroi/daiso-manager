@@ -1,0 +1,52 @@
+#photo-area.viewport canvas, video {
+   position:absolute;
+   margin:auto;
+   width:70%;
+   height: 50%;
+   margin-right:10%;
+   margin-left:10%;
+}
+#main{
+   width:90%;
+   margin-right: auto;
+   margin-left : auto;
+}
+#load{
+   display: none;
+   position:absolute;
+   top:0;
+   bottom:0;
+   left:0;
+   right:0;
+   margin:auto;
+   width:100px;
+   height:100px;
+}
+body{
+   width:100%;
+   margin-right:auto;
+   margin-left:auto;
+}
+.center{
+   text-align: center;
+   }
+
+#fadeLayer {
+   position:absolute;
+   top:0px;
+   left:0px;
+   
+   width:100%;
+   height:100%;
+   
+   background-color:#000000;
+   opacity:0.9;
+   visibility:hidden;
+   z-index:1;
+   }
+#list-area{
+	width:80%;
+	height:30%;
+	position:fixed;
+	bottom:0;
+}
