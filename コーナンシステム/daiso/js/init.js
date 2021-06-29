@@ -30,25 +30,25 @@ firebase.auth().onAuthStateChanged(function (user)
 		}).catch((e) => { throw new Error(e); });
 	} else {
 		// 6月20日まで開放
-		// $(".hideme").css("visibility", "hidden");
-		// var uiConfig = {
-		// 	callbacks: {
-		// 		signInSuccessWithAuthResult: function (authResult, redirectUrl)
-		// 		{
-		// 			return true;
-		// 		},
-		// 		uiShown: function ()
-		// 		{
-		// 		}
-		// 	},
-		// 	signInFlow: 'popup',
-		// 	signInSuccessUrl: location.href,
-		// 	signInOptions: [
-		// 		firebase.auth.EmailAuthProvider.PROVIDER_ID,
-		// 	],
-		// };
-		// ui.start('#firebaseui-auth-container', uiConfig);
-		firebase.auth().signInWithEmailAndPassword("konan089@handy.app", "konan089").then(() => { alert("現在BIG-Kシステムがダウンしているため、6/20までシステムを開放しています。"); location.reload(true); });
+		$(".hideme").css("visibility", "hidden");
+		var uiConfig = {
+			callbacks: {
+				signInSuccessWithAuthResult: function (authResult, redirectUrl)
+				{
+					return true;
+				},
+				uiShown: function ()
+				{
+				}
+			},
+			signInFlow: 'popup',
+			signInSuccessUrl: location.href,
+			signInOptions: [
+				firebase.auth.EmailAuthProvider.PROVIDER_ID,
+			],
+		};
+		ui.start('#firebaseui-auth-container', uiConfig);
+		// firebase.auth().signInWithEmailAndPassword("konan089@handy.app", "konan089").then(() => { alert("現在BIG-Kシステムがダウンしているため、6/20までシステムを開放しています。"); location.reload(true); });
 	}
 });
 function getParam_init(name, url)
