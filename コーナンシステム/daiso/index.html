@@ -1,42 +1,50 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<meta charset="utf-8" />
-	<title>メインメニュー</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <title>メインメニュー</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-	<script src="/__/firebase/8.2.2/firebase-app.js"></script>
+    <script src="/__/firebase/8.2.2/firebase-app.js"></script>
     <script src="/__/firebase/8.2.2/firebase-analytics.js"></script>
     <script src="/__/firebase/8.2.3/firebase-auth.js"></script>
     <script src="/__/firebase/8.2.3/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/ui/3.5.2/firebase-ui-auth__ja.js"></script>
     <script src="/__/firebase/init.js"></script>
-	<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
     <link rel="stylesheet" href="css/index.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-	<script src="js/lib/jquery.columns.min.js"></script>
-	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <script src="js/lib/jquery.columns.min.js"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <link rel="apple-touch-icon" href="favicon.png">
     <script src="js/index.js" type="text/javascript"></script>
     <script src="js/init.js" type="text/javascript"></script>
-	<link rel="stylesheet" href="css/clean.css">
+    <link rel="stylesheet" href="css/clean.css">
 </head>
+
 <body class="blurBg-false" style="background-color:#EBEBEB">
-	<div id="firebaseui-auth-container"></div>
+    <div id="firebaseui-auth-container"></div>
     <div id=load>
         <img src="images/loading.gif">
         <p id="message" class="center">ログイン確認</p>
     </div>
     <p class="popup">MSG</p>
-<div class="hideme" id="main">
-    <center><h2 id="titletext">DAISO 管理システム</h2></center>
-    <button class="mainbutton hideme hiddenme" type=“button” onclick="location.href='master.html'">*商品マスタ*</button>
-    <button class="mainbutton hideme hiddenme" type=“button” onclick="location.href='nyuuka-meisai.html'">*入荷管理マスタ*</button>
-    <button class="mainbutton hideme" type=“button” onclick="location.href='search-list.html'">売場商品検索</button>
-    <button class="mainbutton hideme" type=“button” onclick="location.href='daiban-search.html'">台番別リスト出力</button>
-    <button class="mainbutton hideme" type=“button” onclick="location.href='scan.html'">JANスキャン</button>
-    <center><a id="showadminbtn" class="mainbutton" href="javascript:void(0)" onclick="showhidden();">管理者メニューを表示</a></center>
-</div>
+    <div class="hideme" id="main">
+        <center>
+            <h2 id="titletext">DAISO 管理システム</h2>
+        </center>
+        <button class="mainbutton hideme hiddenme" type=“button” onclick="location.href='master.html'">*商品マスタ*</button>
+        <button class="mainbutton hideme hiddenme" type=“button” onclick="location.href='uriba.html'">*売り場マスタ*</button>
+        <button class="mainbutton hideme hiddenme" type=“button”
+            onclick="location.href='nyuuka-meisai.html'">*入荷管理マスタ*</button>
+        <button class="mainbutton hideme" type=“button” onclick="location.href='search-list.html'">売場商品検索</button>
+        <button class="mainbutton hideme" type=“button” onclick="location.href='daiban-search.html'">台番別リスト出力</button>
+        <button class="mainbutton hideme" type=“button” onclick="location.href='scan.html'">JANスキャン</button>
+        <center><a id="showadminbtn" class="mainbutton" href="javascript:void(0)" onclick="showhidden();">管理者メニューを表示</a>
+        </center>
+    </div>
 </body>
+
 </html>
