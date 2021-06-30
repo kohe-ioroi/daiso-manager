@@ -19,10 +19,7 @@
     },
     "Daiso_Master": {
       ".read": "auth !== null",
-      ".write": "auth !== null",
-      ".indexOn": [
-        "JAN"
-      ]
+      ".write": "auth !== null"
     },
     "Daiso_Limit": {
       ".read": "auth !== null",
