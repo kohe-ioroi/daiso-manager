@@ -31,12 +31,26 @@ function startup()
             $("#Retu").val($("#Retu").val().toString().padStart(2, "0"));
         }
     });
+    $('#jan_input, #Daiban, #Dan, #Retu').focus(() =>
+    {
+        $(this).select();
+    });
+    $("#jan_input").keydown((e) =>
+    {
+        if (e.keyCode == 13) {
+            dbsearch($(this).val());
+        }
+    });
     showmain();
     $("#jan_input").focus();
 
 }
 function dbsearch(JAN)
 {
+    if (!regexTest(/([0-9]{8})|([0-9]{13})/, JAN)) {
+        showPopup("JANコードが正しく指定されていません。");
+        return false;
+    }
     showload();
     $("#message").text("データベース内を検索中");
     $.when(
@@ -74,6 +88,10 @@ function dbsearch(JAN)
 function insertData()
 {
     var JAN = $("#jan_input").val();
+    if (!regexTest(/([0-9]{8})|([0-9]{13})/, JAN)) {
+        showPopup("JANコードが正しく指定されていません。");
+        return false;
+    }
     var Daiban = $("#Daiban").val();
     var Tana = $("#Dan").val();
     var Retu = $("#Retu").val();
@@ -132,6 +150,36 @@ function deleteItem()
         showPopup("数値が指定されていません。");
     }
 }
+
+function daibanPickupItem()
+{
+
+    var [Daiban, Tana, Retu] = [$("#Daiban").val(), $("#Dan").val(), $("#Retu").val()];
+    if (Daiban != "" && Tana != "" && Retu != "") {
+        $.when(
+            dataGet("Daiso", "Daiban", Daiban)
+        ).done((data1) =>
+        {
+            var flag1 = false;
+            Object.keys(data1).forEach((key) =>
+            {
+                if (data1[key]["Daiban"] == Daiban && data1[key]["Tana"] == Tana && data1[key]["Retu"] == Retu) {
+                    flag1 = true;
+                    $("#itemName").val(data1[key]["ItemName"]);
+                    $("#jan_input").val(data1[key]["JAN"]);
+                }
+            });
+            if (flag1) {
+                showPopup("データの検索に成功しました。");
+            } else {
+                showPopup("対象の番号はありませんでした。");
+            }
+        });
+    } else {
+        showPopup("数値が指定されていません。");
+    }
+}
+
 function nextfeild(str)
 {
     if (str.value.length >= str.maxLength) {

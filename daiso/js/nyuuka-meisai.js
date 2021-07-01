@@ -12,6 +12,11 @@ function init()
             inputData();
         } else { if ($("#item-count").val() != "") { alertbeep(); showPopup("入力が設定した内容に一致していません。"); formReset(); } }
     });
+    nextfieldALL();
+    $("#item-code, #item-count").focus(() =>
+    {
+        $(this).select();
+    });
 }
 function errormessage(msgcode)
 {

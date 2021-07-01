@@ -9,20 +9,18 @@ function init()
     $("#message").text("デバイスセットアップ...");
     settingDevice();
     showmain();
-    document.getElementById("jan_input").onkeypress = (e) =>
+    $("#jan_input").keydown((e) =>
     {
-        key = e.keyCode || e.charCode || 0;
-        if (key == 13) {
+        if (e.keyCode == 13) {
             inputData();
         }
-    };
-    document.getElementById("tana-code").onkeypress = (e) =>
+    });
+    $("#tana-code").keydown((e) =>
     {
-        key = e.keyCode || e.charCode || 0;
-        if (key == 13) {
+        if (e.keyCode == 13) {
             onChangeTana();
         }
-    };
+    });
     $("#tana-code").focus();
 
 }
@@ -34,73 +32,6 @@ function errormessage(msgcode)
         msg.play();
     }
 }
-function settingDevice()
-{
-    navigator.mediaDevices.enumerateDevices()
-        .then(function (devices)
-        {
-            devices.forEach(function (device)
-            {
-                if (device.kind == "videoinput") {
-                    devicelist.push(device);
-                }
-            });
-            dev1 = new URL(location).searchParams.get("cam");
-            if (dev1) {
-                deviceid = devicelist[dev1].deviceId;
-            }
-            else {
-                deviceid = devicelist[devicelist.length - 1].deviceId;
-            }
-        });
-}
-function calc(isbn)
-{
-    const arrIsbn = isbn
-        .toString()
-        .split("")
-        .map(num => parseInt(num));
-    let remainder = 0;
-    const checkDigit = arrIsbn.pop();
-
-    arrIsbn.forEach((num, index) =>
-    {
-        remainder += num * (index % 2 === 0 ? 1 : 3);
-    });
-    remainder %= 10;
-    remainder = remainder === 0 ? 0 : 10 - remainder;
-
-    return checkDigit === remainder;
-}
-Array.prototype.mode = function ()
-{
-    if (this.length === 0) {
-        throw new Error("ERROR");
-    }
-    var counter = {};
-    var nativeValues = {};
-
-    var maxCounter = 0;
-    var maxValue = null;
-
-    for (var i = 0; i < this.length; i++) {
-        if (!counter[this[i] + "_" + typeof this[i]]) {
-            counter[this[i] + "_" + typeof this[i]] = 0;
-        }
-        counter[this[i] + "_" + typeof this[i]]++;
-        nativeValues[this[i] + "_" + typeof this[i]] = this[i];
-
-    }
-    for (var j = 0; j < Object.keys(counter).length; j++) {
-        key = Object.keys(counter)[j];
-        if (counter[key] > maxCounter) {
-            maxCounter = counter[key];
-            maxValue = nativeValues[key];
-        }
-    }
-    return maxValue;
-
-};
 function onChangeTana()
 {
     var tanacode = String($("#tana-code").val());
@@ -149,7 +80,7 @@ function inputData()
         beep();
         formReset();
     } else {
-        var JAN = document.getElementById("jan_input").value;
+        var JAN = $("#jan_input").val();
         var Daiban = $("#Daiban").val();
         var Tana = $("#Dan").val();
         var Retu = $("#Retu").val();
@@ -178,23 +109,20 @@ function inputData()
                     if (Object.keys(data).length) {
                         $.when(
                             insertData(data[Object.keys(data)[0]]["ItemName"], JAN, Daiban, Tana, Retu, data[Object.keys(data)[0]]["Price"], data[Object.keys(data)[0]]["isFood"], data[Object.keys(data)[0]]["isDoubled"])
-                        ).done(function () { showmain(); beep(); $('#jan_input').focus(); });
+                        ).done(() =>
+                        {
+                            showmain();
+                            beep();
+                            $('#jan_input').val("");
+                            $('#jan_input').focus();
+                        });
                     } else {
                         showmain();
                         errormessage("e0001");//マスタ登録なしエラー。
                         window.open('/master.html?jan=' + JAN);
                         $("#Retu").val(Retu);
                         $('#jan_input').focus();
-                        if (confirm("マスタに登録しましたか？")) {
-                            inputData();
-                            break;
-                        } else {
-
-                        }
-
                     }
-                    $('#jan_input').val("");
-                    $('#jan_input').focus();
                 }
             );
         } else {
@@ -203,22 +131,7 @@ function inputData()
         }
     }
 }
-function no_scroll(event)
-{
-    event.preventDefault();
-}
-function nextfeild(str)
-{
-    if (str.value.length >= str.maxLength) {
-        for (var i = 0, elm = str.form.elements; i < elm.length; i++) {
-            if (elm[i] == str) {
-                (elm[i + 1] || elm[0]).focus();
-                break;
-            }
-        }
-    }
-    return (str);
-}
+
 function insertData(itemName, JAN, Daiban, Tana, Retu, Price, isFood, isDoubled)
 {
     if (JAN && Daiban && Tana && Retu) {

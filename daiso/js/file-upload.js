@@ -46,13 +46,13 @@ function makepath()
     var storageRef = firebase.storage().ref();
     var fileRef = storageRef.child(fileup.files[0].name);
     var file = fileup.files[0];
-    if (file.size < 67108864) {
+    if (file.size < 104857600) {
         fileRef.put(file).then((ss) =>
         {
             location.reload();
         });
     } else {
-        alert("ファイルサイズが大きすぎます。64MB以内でアップロードしてください。");
+        alert("ファイルサイズが大きすぎます。100MB以内でアップロードしてください。");
         fileup.value = "";
     }
 
