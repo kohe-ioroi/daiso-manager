@@ -35,12 +35,7 @@ function startup()
     {
         $(this).select();
     });
-    $("#jan_input").keydown((e) =>
-    {
-        if (e.keyCode == 13) {
-            dbsearch($(this).val());
-        }
-    });
+    nextfieldALL();
     showmain();
     $("#jan_input").focus();
 

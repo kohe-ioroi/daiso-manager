@@ -252,6 +252,7 @@ function nextfieldALL()
 			} else {
 				$('input')[Index].blur();        // 最後の要素ではフォーカスを外す
 			}
+			return false;
 		}
 	});
 }

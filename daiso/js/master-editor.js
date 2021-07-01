@@ -63,19 +63,6 @@ function dbsearch(JAN)
         }
     );
 }
-
-function nextfeild(str)
-{
-    if (str.value.length >= str.maxLength) {
-        for (var i = 0, elm = str.form.elements; i < elm.length; i++) {
-            if (elm[i] == str) {
-                (elm[i + 1] || elm[0]).focus();
-                break;
-            }
-        }
-    }
-    return (str);
-}
 function insertData()
 {
     itemName = document.getElementById("itemName").value;
