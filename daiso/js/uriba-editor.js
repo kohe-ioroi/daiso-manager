@@ -31,10 +31,7 @@ function startup()
             $("#Retu").val($("#Retu").val().toString().padStart(2, "0"));
         }
     });
-    $('#jan_input, #Daiban, #Dan, #Retu').focus(() =>
-    {
-        $(this).select();
-    });
+    focustoselectALL();
     nextfieldALL();
     showmain();
     $("#jan_input").focus();

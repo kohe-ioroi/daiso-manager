@@ -3,20 +3,16 @@ var devicelist = [];
 var choicedevicecount = 0;
 var deviceid;
 var idtoken;
-function init()
-{
+function init() {
     showload();
     $("#message").text("デバイスセットアップ...");
-    settingDevice();
     showmain();
-    $("#jan_input").keydown((e) =>
-    {
+    $("#jan_input").keydown((e) => {
         if (e.keyCode == 13) {
             inputData();
         }
     });
-    $("#tana-code").keydown((e) =>
-    {
+    $("#tana-code").keydown((e) => {
         if (e.keyCode == 13) {
             onChangeTana();
         }
@@ -25,15 +21,13 @@ function init()
 
 }
 
-function errormessage(msgcode)
-{
+function errormessage(msgcode) {
     if (msgcode) {
         var msg = new Audio('./msg/' + msgcode + '.mp3');
         msg.play();
     }
 }
-function onChangeTana()
-{
+function onChangeTana() {
     var tanacode = String($("#tana-code").val());
     if (tanacode.indexOf("D-") != -1 && tanacode.length == 6) {
         beep();
@@ -44,8 +38,7 @@ function onChangeTana()
         errormessage("e0003");//入力値エラー。
     }
 }
-function formReset()
-{
+function formReset() {
     $("#tana-code").val("");
     $("#jan_input").val("");
     $("#Daiban").val("");
@@ -53,8 +46,7 @@ function formReset()
     $("#Retu").val("01");
     $("#tana-code").focus();
 }
-function inputData()
-{
+function inputData() {
     if ($("#jan_input").val() == "NEXT") {
         VDan = $('#Dan').val();
         if (VDan.slice(0, 1) == "0") {
@@ -99,18 +91,15 @@ function inputData()
                 var i = Number(Retu);
                 $("#Retu").val((i + 1));
             }
-            showload();
             $.when(
                 dataGet("Daiso_Master", "JAN", JAN)
             ).done(
-                function (master)
-                {
+                function (master) {
                     var data = master;
                     if (Object.keys(data).length) {
                         $.when(
                             insertData(data[Object.keys(data)[0]]["ItemName"], JAN, Daiban, Tana, Retu, data[Object.keys(data)[0]]["Price"], data[Object.keys(data)[0]]["isFood"], data[Object.keys(data)[0]]["isDoubled"])
-                        ).done(() =>
-                        {
+                        ).done(() => {
                             showmain();
                             beep();
                             $('#jan_input').val("");
@@ -132,17 +121,14 @@ function inputData()
     }
 }
 
-function insertData(itemName, JAN, Daiban, Tana, Retu, Price, isFood, isDoubled)
-{
+function insertData(itemName, JAN, Daiban, Tana, Retu, Price, isFood, isDoubled) {
     if (JAN && Daiban && Tana && Retu) {
         $.when(
             dataGet("Daiso", "Daiban", Daiban)
         ).done(
-            (data1) =>
-            {
+            (data1) => {
                 var data = { "Bumon": "24", "ItemName": itemName, "JAN": JAN, "PB": "", "Price": Price, "Daiban": Daiban, "Tana": Tana, "Retu": Retu, "isFood": isFood, "isDoubled": isDoubled };
-                Object.keys(data1).forEach((key) =>
-                {
+                Object.keys(data1).forEach((key) => {
                     if (data1[key]["Daiban"] == Daiban && data1[key]["Tana"] == Tana && data1[key]["Retu"] == Retu) {
                         dataDelete("Daiso", key);
                     }
@@ -155,22 +141,22 @@ function insertData(itemName, JAN, Daiban, Tana, Retu, Price, isFood, isDoubled)
 };
 
 
-function missdataremove()
-{
+function missdataremove() {
     itemscount = 0;
     counter = 0;
     $.when(
         dataGet("Daiso", "JAN", "0000000000000")
     ).done(
-        function (data)
-        {
+        function (data) {
             itemscount = Object.keys(data).length;
-            Object.keys(data).forEach(function (i)
-            {
+            if (itemscount == 0) {
+                showPopup("該当するデータがありませんでした。");
+                return false;
+            }
+            Object.keys(data).forEach(function (i) {
                 $.when(
                     dataDelete("Daiso", i)
-                ).done(function ()
-                {
+                ).done(() => {
                     console.log("処理中:" + i);
                 });
             });
@@ -178,20 +164,22 @@ function missdataremove()
         }
     );
 }
-function deleteDaiban(Daiban)
-{
+function deleteDaiban(Daiban) {
     if (Daiban != "XXXX" && Daiban != "" && confirm("指定の台番を削除してよろしいですか？No:" + Daiban)) {
-        var wlist = [];
         $.when(
             dataGet("Daiso", "Daiban", Daiban)
         ).done(
-            function (data)
-            {
-                Object.keys(data).forEach(function (i)
-                {
+            (data) => {
+                if (Object.keys(data).length == 0) {
+                    showPopup("該当するデータがありませんでした。");
+                    return false;
+                }
+                var count = 0;
+                Object.keys(data).forEach(function (i) {
                     dataDelete("Daiso", i);
+                    count++;
                 });
-                showPopup("削除処理完了");
+                showPopup("削除処理完了 件数:" + count);
             }
         );
     }

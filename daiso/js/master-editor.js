@@ -2,17 +2,17 @@
 {
     showload();
     $("#message").text("デバイスセットアップ...");
-    $("#jan_input").change(() =>
+    $("#jan_input").change((e) =>
     {
-        if (e.keyCode == 13) {
-            if (regexTest(/([0-9]{8})|([0-9]{13})/, $(this).val())) {
-                dbsearch($(this).val());
-            } else {
-                alert("入力内容に不備があります。");
-            }
+
+        if (regexTest(/([0-9]{8})|([0-9]{13})/, $("#jan_input").val())) {
+            dbsearch($("#jan_input").val());
+        } else {
+            alert("入力内容に不備があります。");
         }
     });
     nextfieldALL();
+    focustoselectALL();
     showmain();
     $("#jan_input").focus();
     if (location.search) {
@@ -86,7 +86,7 @@ function insertData()
                 if (Object.keys(func1).length == 0) {
                     dataTargetInsert("Daiso_Master", JAN, data);
                     showPopup("データ書き込み完了");
-                    if (window.opener != null && window.opener.location.href == "https://daiso-konan089.web.app/scanner-input.html") {
+                    if (window.opener != null) {
                         window.opener.inputData();
                         window.close();
                     }
