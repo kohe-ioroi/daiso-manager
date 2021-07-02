@@ -1,52 +1,37 @@
 
-function init()
-{
+function init() {
     startup();
 }
-function startup()
-{
+function startup() {
     showload();
     $("#message").text("デバイスセットアップ...");
-    $("#jan_input").change(function ()
-    {
+    $("#jan_input").change(function () {
         if ($("#jan_input").val().length) {
             dbsearch($("#jan_input").val());
         }
     });
-    $("#Daiban").blur(() =>
-    {
+    $("#Daiban").blur(() => {
         if ($("#Daiban").val().length < 4 & $("#Daiban").val() != "") {
             $("#Daiban").val($("#Daiban").val().toString().padStart(4, "0"));
         }
     });
-    $("#Dan").blur(() =>
-    {
+    $("#Dan").blur(() => {
         if ($("#Dan").val().length < 2 & $("#Dan").val() != "") {
             $("#Dan").val($("#Dan").val().toString().padStart(2, "0"));
         }
     });
-    $("#Retu").blur(() =>
-    {
+    $("#Retu").blur(() => {
         if ($("#Retu").val().length < 2 & $("#Retu").val() != "") {
             $("#Retu").val($("#Retu").val().toString().padStart(2, "0"));
         }
     });
-    $('#jan_input, #Daiban, #Dan, #Retu').focus(() =>
-    {
-        $(this).select();
-    });
-    $("#jan_input").keydown((e) =>
-    {
-        if (e.keyCode == 13) {
-            dbsearch($(this).val());
-        }
-    });
+    focustoselectALL();
+    nextfieldALL();
     showmain();
     $("#jan_input").focus();
 
 }
-function dbsearch(JAN)
-{
+function dbsearch(JAN) {
     if (!regexTest(/([0-9]{8})|([0-9]{13})/, JAN)) {
         showPopup("JANコードが正しく指定されていません。");
         return false;
@@ -57,8 +42,7 @@ function dbsearch(JAN)
         dataGet("Daiso_Master", "JAN", JAN),
         dataGet("Daiso_HTData", "JAN", JAN)
     ).done(
-        function (master, ht)
-        {
+        function (master, ht) {
             var data = master;
             var htdata = ht;
             if (Object.keys(data).length) {
@@ -85,8 +69,7 @@ function dbsearch(JAN)
         }
     );
 }
-function insertData()
-{
+function insertData() {
     var JAN = $("#jan_input").val();
     if (!regexTest(/([0-9]{8})|([0-9]{13})/, JAN)) {
         showPopup("JANコードが正しく指定されていません。");
@@ -100,12 +83,10 @@ function insertData()
             dataGet("Daiso_Master", "JAN", JAN),
             dataGet("Daiso", "Daiban", Daiban)
         ).done(
-            (data1, data2) =>
-            {
+            (data1, data2) => {
                 if (Object.keys(data1).length) {
                     var data = { "Bumon": "24", "ItemName": data1[Object.keys(data1)[0]]["ItemName"], "JAN": JAN, "PB": "", "Price": data1[Object.keys(data1)[0]]["Price"], "Daiban": Daiban, "Tana": Tana, "Retu": Retu, "isFood": data1[Object.keys(data1)[0]]["isFood"], "isDoubled": data1[Object.keys(data1)[0]]["isDoubled"] };
-                    Object.keys(data2).forEach((key) =>
-                    {
+                    Object.keys(data2).forEach((key) => {
                         if (data2[key]["Daiban"] == Daiban && data2[key]["Tana"] == Tana && data2[key]["Retu"] == Retu) {
                             dataDelete("Daiso", key);
                         }
@@ -123,17 +104,14 @@ function insertData()
     }
 
 };
-function deleteItem()
-{
+function deleteItem() {
     var [Daiban, Tana, Retu] = [$("#Daiban").val(), $("#Dan").val(), $("#Retu").val()];
     if (Daiban != "" && Tana != "" && Retu != "") {
         $.when(
             dataGet("Daiso", "Daiban", Daiban)
-        ).done((data1) =>
-        {
+        ).done((data1) => {
             var flag1 = false;
-            Object.keys(data1).forEach((key) =>
-            {
+            Object.keys(data1).forEach((key) => {
                 if (data1[key]["Daiban"] == Daiban && data1[key]["Tana"] == Tana && data1[key]["Retu"] == Retu) {
                     dataDelete("Daiso", key);
                     flag1 = true;
@@ -151,18 +129,15 @@ function deleteItem()
     }
 }
 
-function daibanPickupItem()
-{
+function daibanPickupItem() {
 
     var [Daiban, Tana, Retu] = [$("#Daiban").val(), $("#Dan").val(), $("#Retu").val()];
     if (Daiban != "" && Tana != "" && Retu != "") {
         $.when(
             dataGet("Daiso", "Daiban", Daiban)
-        ).done((data1) =>
-        {
+        ).done((data1) => {
             var flag1 = false;
-            Object.keys(data1).forEach((key) =>
-            {
+            Object.keys(data1).forEach((key) => {
                 if (data1[key]["Daiban"] == Daiban && data1[key]["Tana"] == Tana && data1[key]["Retu"] == Retu) {
                     flag1 = true;
                     $("#itemName").val(data1[key]["ItemName"]);
@@ -180,8 +155,7 @@ function daibanPickupItem()
     }
 }
 
-function nextfeild(str)
-{
+function nextfeild(str) {
     if (str.value.length >= str.maxLength) {
         for (var i = 0, elm = str.form.elements; i < elm.length; i++) {
             if (elm[i] == str) {
@@ -192,8 +166,7 @@ function nextfeild(str)
     }
     return (str);
 }
-function clearInput()
-{
+function clearInput() {
     $("#jan_input").val("");
     $("#itemName").val("");
     $("#Daiban").val("");
