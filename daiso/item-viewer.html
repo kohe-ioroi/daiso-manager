@@ -11,7 +11,7 @@
     <script src="/__/firebase/8.2.3/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/ui/3.5.2/firebase-ui-auth__ja.js"></script>
     <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
-    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/item-viewer.css" />
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <link rel="apple-touch-icon" href="icon.png">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
@@ -26,17 +26,10 @@
 </head>
 
 <body class="blurBg-false" style="background-color:#EBEBEB;height:110%">
-    <div id=load>
-        <img src="images/loading.gif">
-        <p id="message" class="center">ダウンロード中</p>
-    </div>
     <div id="firebaseui-auth-container"></div>
-    <center>
-        <h2>売り場一覧検索</h2>
-    </center>
-    <p class="popup">MSG</p>
     <div class="hideme" id="main" STYLE="text-align:center;">
         <form onsubmit="doWork($('#search').val());return false;">
+            <h1>商品一覧出力</h1>
             <input type="text" id="search" STYLE="height:10%;font-size: 200%;width:3em;" maxlength=4>
         </form>
     </div>
