@@ -156,9 +156,16 @@ button {
 }
 table {
   width:100%;
+  table-layout: fixed;
 }
 tr {
   text-align: center;
+}
+table td {
+  text-align: center;
+  overflow-wrap: break-word;
+  white-space: pre-line;
+  max-width: 30%;
 }
 .popup {
   font-size:1.3em;

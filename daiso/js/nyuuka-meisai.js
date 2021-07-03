@@ -4,10 +4,8 @@ var choicedevicecount = 0;
 var deviceid;
 var idtoken;
 var datakey = "";
-function init()
-{
-    $("#item-count").blur(function ()
-    {
+function init() {
+    $("#item-count").blur(function () {
         if (document.getElementsByName("input2")[0].value && RegExp("([M][0-9]{7})|([0-9]{2}[BTXY][0-9]{5})").test($("#item-code").val()) && RegExp("[0-9]+").test($("#item-count").val())) {
             inputData();
         } else { if ($("#item-count").val() != "") { alertbeep(); showPopup("入力が設定した内容に一致していません。"); formReset(); } }
@@ -18,21 +16,18 @@ function init()
     document.getElementsByName("input2")[0].value = date.getFullYear() + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + ("0" + date.getDate()).slice(-2);
     $("#item-code").focus();
 }
-function errormessage(msgcode)
-{
+function errormessage(msgcode) {
     if (msgcode) {
         var msg = new Audio('./msg/' + msgcode + '.mp3');
         msg.play();
     }
 }
-function formReset()
-{
+function formReset() {
     $("#item-code").val("");
     $("#item-count").val("");
     $("#item-code").focus();
 }
-function inputData()
-{
+function inputData() {
     showload();
     var exportdate = document.getElementsByName("input2")[0].value;
     var importdate = document.getElementsByName("input2")[0].value;
@@ -42,41 +37,51 @@ function inputData()
         $.when(
             dataGet("Daiso_import", "itemcode", itemcode)
         ).done(
-            function (data)
-            {
-                datakey = Object.keys(data)[0];
-                if (Object.keys(data).length) {
+            (data) => {
+                var [edobj, idobj, nowobj] = [new Date(exportdate), new Date(importdate), new Date()];
+                nowobj.setDate(nowobj.getDate() + 1);
+                var [datakey, datakeys] = [Object.keys(data)[0], Object.keys(data)];
+                if (Object.keys(data).length && data[datakey]["itemcode"] == itemcode && new Date(data[datakey]["importdate"]) >= new Date(importdate)) {
                     alertbeep();
                     showPopup("該当する番号はすでに入力が完了しています。");
                     showmain();
                     formReset();
-                } else {
-                    edobj = new Date(exportdate);
-                    idobj = new Date(importdate);
-                    nowobj = new Date();
-                    nowobj.setDate(nowobj.getDate() + 1);
+                } else if (Object.keys(data).length && data[datakey]["itemcode"] == itemcode && new Date(data[datakey]["importdate"]) < new Date(importdate)) {
                     if (nowobj >= edobj && nowobj >= idobj && edobj <= idobj) {
-                        // if(confirm("下記データで登録します。間違いないですか？\n"+msg)){
-                        if (true) {
-                            $.when(
-                                appendData(exportdate, importdate, itemcode, itemcount)
-                            ).done(
-                                function ()
-                                {
-                                    beep();
-                                    showmain();
-                                    formReset();
-                                }
-                            );
-                        } else {
-                            showmain();
-                        }
+                        $.when(
+                            () => { datakeys.forEach((key) => { dataDelete("Daiso_import", key) }) },
+                            appendData(exportdate, importdate, itemcode, itemcount)
+                        ).done(
+                            function () {
+                                beep();
+                                showmain();
+                                formReset();
+                                showPopup("入力完了(重複データ上書き)")
+                            }
+                        );
+                    } else {
+                        showPopup("日付が異常です。");
+                        showmain();
+                    }
+                } else {
+                    if (nowobj >= edobj && nowobj >= idobj && edobj <= idobj) {
+                        $.when(
+                            appendData(exportdate, importdate, itemcode, itemcount)
+                        ).done(
+                            function () {
+                                beep();
+                                showmain();
+                                formReset();
+                                showPopup("入力完了(通常書き込み)")
+                            }
+                        );
                     } else {
                         showPopup("日付が異常です。");
                         showmain();
                     }
                 }
-            });
+            }
+        );
     } else {
         alertbeep();
         showPopup("データがありません。");
@@ -85,13 +90,11 @@ function inputData()
     }
 
 }
-function searchData(id)
-{
+function searchData(id) {
     $.when(
         dataGet("Daiso_import", "itemcode", id)
     ).done(
-        function (data)
-        {
+        function (data) {
             datakey = Object.keys(data)[0];
             if (Object.keys(data).length) {
                 d = data[Object.keys(data)[0]];
@@ -106,19 +109,16 @@ function searchData(id)
     );
 
 }
-function showload()
-{
+function showload() {
     $("#message").text("処理中");
     $("#main").fadeOut(50);
     $("#load").fadeIn(50);
 }
-function showmain()
-{
+function showmain() {
     $("#load").fadeOut(50);
     $("#main").fadeIn(50);
 }
-function appendData(a, b, c, d)
-{
+function appendData(a, b, c, d) {
     var dfd = $.Deferred();
     var data = { "exportdate": a, "importdate": b, "itemcode": c, "itemcount": d };
     $.when(
@@ -128,13 +128,10 @@ function appendData(a, b, c, d)
     );
     return dfd.promise();
 }
-function delData()
-{
-    $.when(dataGet("Daiso_import", "itemcode", $("#item-code").val())).done((data) =>
-    {
+function delData() {
+    $.when(dataGet("Daiso_import", "itemcode", $("#item-code").val())).done((data) => {
         if (Object.keys(data).length) {
-            Object.keys(data).forEach((i) =>
-            {
+            Object.keys(data).forEach((i) => {
                 dataDelete("Daiso_import", i);
             });
             alert("データの削除が完了しました。");
@@ -142,10 +139,8 @@ function delData()
         } else { alert("対象データはありません。"); }
     });
 }
-$(function ()
-{
-    $("input").keydown(function (e)
-    {
+$(function () {
+    $("input").keydown(function (e) {
         if ((e.which && e.which === 13) || (e.keyCode && e.keyCode === 13)) {
             return false;
         } else {
