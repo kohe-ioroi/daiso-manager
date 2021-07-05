@@ -157,9 +157,12 @@ button {
 table {
   table-layout: fixed;
   margin: 3px auto;
+  page-break-inside:auto
 }
 tr {
   text-align: center;
+  page-break-inside:avoid;
+  page-break-after:auto
 }
 table td {
   text-align: center;
