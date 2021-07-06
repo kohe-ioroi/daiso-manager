@@ -5,9 +5,6 @@ var deviceid;
 var idtoken;
 function init()
 {
-    showload();
-    $("#message").text("デバイスセットアップ...");
-    showmain();
     $("#jan_input").keydown((e) =>
     {
         if (e.keyCode == 13) {
@@ -209,8 +206,6 @@ function changeTana(switcher)
         }
         $("#Retu").val("01");
         $("#jan_input").val("");
-        $('#jan_input').focus();
-        beep();
     } else if (switcher == false) {
         VDan = $('#Dan').val();
         if (parseInt(VDan) <= 1) {
@@ -232,8 +227,6 @@ function changeTana(switcher)
         }
         $("#Retu").val("01");
         $("#jan_input").val("");
-        $('#jan_input').focus();
-        beep();
     } else {
         alert("棚変更判定エラー");
     }
