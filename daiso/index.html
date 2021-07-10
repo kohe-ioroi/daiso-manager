@@ -7,13 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <script src="/__/firebase/8.2.2/firebase-app.js"></script>
-    <script src="/__/firebase/8.2.2/firebase-analytics.js"></script>
-    <script src="/__/firebase/8.2.3/firebase-auth.js"></script>
-    <script src="/__/firebase/8.2.3/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/ui/3.5.2/firebase-ui-auth__ja.js"></script>
+    <script src="/__/firebase/8.6.8/firebase.js"></script>
     <script src="/__/firebase/init.js"></script>
-    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
     <link rel="stylesheet" href="css/index.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="js/lib/jquery.columns.min.js"></script>
@@ -35,21 +30,14 @@
         <center>
             <h2 id="titletext">DAISO 管理システム</h2>
         </center>
-        <button class="mainbutton hideme hiddenme" type=“button”
-            onclick="location.href='master.html'">💻*商品マスタ*</button>
-        <button class="mainbutton hideme hiddenme" type=“button”
-            onclick="location.href='uriba.html'">💻*売り場マスタ*</button>
-        <button class="mainbutton hideme hiddenme" type=“button”
-            onclick="location.href='nyuuka-meisai.html'">💻*入荷管理マスタ*</button>
-        <button class="mainbutton hideme" type=“button”
-            onclick="location.href='file-upload.html'">💻ファイルUP/DL(事務所間専用)</button>
+        <button class="mainbutton hideme" type=“button” onclick="location.href='master.html'">💻商品マスタ</button>
+        <button class="mainbutton hideme" type=“button” onclick="location.href='uriba.html'">💻売り場マスタ</button>
+        <button class="mainbutton hideme" type=“button” onclick="location.href='nyuuka-meisai.html'">💻入荷管理マスタ</button>
+        <button class="mainbutton hideme" type=“button” onclick="location.href='file-upload.html'">💻ファイルUP/DL</button>
         <button class="mainbutton hideme" type=“button” onclick="location.href='search-list.html'">🔍売場商品検索</button>
-        <button class="mainbutton hideme" type=“button”
-            onclick="location.href='daiban-search.html'">🔍台番別詳細リスト出力</button>
-        <button class="mainbutton hideme" type=“button” onclick="location.href='item-viewer.html'">🔍台番別一覧出力</button>
+        <button class="mainbutton hideme" type=“button” onclick="location.href='daiban-search.html'">🔍台番リスト出力</button>
+        <button class="mainbutton hideme" type=“button” onclick="location.href='item-viewer.html'">🔍台番一覧出力</button>
         <button class="mainbutton hideme" type=“button” onclick="location.href='scan.html'">📷JANスキャン</button>
-        <center><a id="showadminbtn" class="mainbutton" href="javascript:void(0)" onclick="showhidden();">管理者メニューを表示</a>
-        </center>
     </div>
 </body>
 

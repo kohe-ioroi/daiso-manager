@@ -1,4 +1,12 @@
 // Firebase ConfigをInitialize
+$(document).ready(() => {
+	const appCheck = firebase.appCheck();
+	appCheck.activate('6Lc2oYgbAAAAAAY7PP-a4o6Z9kG6OcnCYW7XDZvL');
+})
+if (document.location.hostname != "daiso.ioroikouhei.com") {
+	let path = location.pathname;
+	location.href = ("https://daiso.ioroikouhei.com" + path);
+}
 var firebaseConfig = {
 	apiKey: "AIzaSyDlqQrxpx5tXJkX_K33BPKbfHiOjFodbGE",
 	authDomain: "konan089-a83b7.firebaseapp.com",
@@ -14,7 +22,6 @@ if (firebase.apps.length === 0) {
 	firebase.initializeApp(firebaseConfig);
 }
 //認証シーケンス
-var ui = new firebaseui.auth.AuthUI(firebase.auth());
 firebase.auth().onAuthStateChanged(function (user) {
 	if (user) {
 		firebase.auth().currentUser.getIdToken(true).then(function (idToken) {
@@ -56,12 +63,15 @@ firebase.auth().onAuthStateChanged(function (user) {
 		);
 	}
 });
-
 function regexTest(regex, str) {
 	var REGEXP = new RegExp(regex);
 	return REGEXP.test(str);
 }
-
+function appendScript(URL) {
+	var el = document.createElement('script');
+	el.src = URL;
+	document.body.appendChild(el);
+};
 function getParam_init(name, url) {
 	if (!url) url = window.location.href;
 	name = name.replace(/[\[\]]/g, "\\$&");
