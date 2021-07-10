@@ -105,16 +105,6 @@ function showTable(query)
     }
   }
 }
-function showload()
-{
-  $("#main").fadeOut(50);
-  $("#load").fadeIn(50);
-}
-function showmain()
-{
-  $("#load").fadeOut(50);
-  $("#main").fadeIn(50);
-}
 function zenkaku2Hankaku(str)
 {
   return str.replace(/[A-Za-z0-9]/g, function (s)

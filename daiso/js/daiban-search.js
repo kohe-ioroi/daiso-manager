@@ -3,33 +3,36 @@ var devicelist = [];
 var choicedevicecount = 0;
 var deviceid;
 var idtoken;
-function showTable(val, val2) {
-  datalist = {}
+function showTable(val, val2)
+{
+  datalist = {};
   if (parseInt(val) > parseInt(val2)) {
-    alert("開始ページを終了ページより大きくすることはできません。")
+    alert("開始ページを終了ページより大きくすることはできません。");
     return false;
   }
-  $('#search').val(val.padStart(4, "0"))
+  $('#search').val(val.padStart(4, "0"));
   if (val2 == "") {
     val2 = val;
   } else {
-    $('#search2').val(val2.padStart(4, "0"))
+    $('#search2').val(val2.padStart(4, "0"));
   }
-  showload()
+  showload();
   $.when(TableGet("Daiso")
   ).done(
-    (data) => {
-      lists = []
-      putdata = {}
+    (data) =>
+    {
+      lists = [];
+      putdata = {};
       for (i = parseInt(val); i < parseInt(val2) + 1; i++) {
         lists.push(i.toString().padStart(4, "0"));
       }
-      Object.keys(data).forEach((key) => {
+      Object.keys(data).forEach((key) =>
+      {
         if (lists.includes(data[key]["Daiban"])) {
           putdata[key] = data[key];
         }
 
-      })
+      });
       obj = putdata;
       showmain();
       if (Object.keys(putdata).length == 0) {
@@ -41,7 +44,7 @@ function showTable(val, val2) {
       } catch {
       } finally {
         list = [];
-        Object.keys(obj).forEach((i) => { list.push(obj[i]) });
+        Object.keys(obj).forEach((i) => { list.push(obj[i]); });
         list.sort(funcCompare);
         $('#columns').columns({
           data: list,
@@ -58,39 +61,36 @@ function showTable(val, val2) {
           ],
           size: 1000,
           showRows: [-1, 30, 50, 100, 1000, 10000]
-        })
+        });
       }
     }
-  )
+  );
 
 }
-function showload() {
-  $("#main").fadeOut(50);
-  $("#load").fadeIn(50);
-}
-function showmain() {
-  $("#load").fadeOut(50);
-  $("#main").fadeIn(50);
-}
-function init() {
-  document.getElementById("search").onkeypress = (e) => {
-    $("#search").val($("#search").val().replace(/[^0-9]/g, ''))
+function init()
+{
+  document.getElementById("search").onkeypress = (e) =>
+  {
+    $("#search").val($("#search").val().replace(/[^0-9]/g, ''));
     key = e.keyCode || e.charCode || 0;
     if (key == 13) {
-      showTable($('#search').val(), $('#search2').val())
+      showTable($('#search').val(), $('#search2').val());
     }
-  }
-  document.getElementById("search2").onkeypress = (e) => {
-    $("#search2").val($("#search2").val().replace(/[^0-9]/g, ''))
+  };
+  document.getElementById("search2").onkeypress = (e) =>
+  {
+    $("#search2").val($("#search2").val().replace(/[^0-9]/g, ''));
     key = e.keyCode || e.charCode || 0;
     if (key == 13) {
-      showTable($('#search').val(), $('#search2').val())
+      showTable($('#search').val(), $('#search2').val());
     }
-  }
-  $("#search").change(() => {
-    $("#search").val($("#search").val().replace(/[^0-9]/g, ''))
-  })
-  $("#search2").change(() => {
-    $("#search2").val($("#search2").val().replace(/[^0-9]/g, ''))
-  })
+  };
+  $("#search").change(() =>
+  {
+    $("#search").val($("#search").val().replace(/[^0-9]/g, ''));
+  });
+  $("#search2").change(() =>
+  {
+    $("#search2").val($("#search2").val().replace(/[^0-9]/g, ''));
+  });
 }

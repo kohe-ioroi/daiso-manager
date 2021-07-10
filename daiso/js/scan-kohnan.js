@@ -128,16 +128,6 @@ function displayData(data, code)
         startScanner(deviceid);
     }
 }
-function showload()
-{
-    $("#main").fadeOut();
-    $("#load").fadeIn();
-}
-function showmain()
-{
-    $("#load").fadeOut();
-    $("#main").fadeIn();
-}
 function calc(isbn)
 {
     const arrIsbn = isbn

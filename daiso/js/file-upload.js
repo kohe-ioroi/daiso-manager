@@ -57,14 +57,3 @@ function makepath()
     }
 
 }
-function showload()
-{
-    $("#message").text("処理中");
-    $("#main").fadeOut(50);
-    $("#load").fadeIn(50);
-}
-function showmain()
-{
-    $("#load").fadeOut(50);
-    $("#main").fadeIn(50);
-}

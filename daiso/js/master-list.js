@@ -3,19 +3,22 @@ var devicelist = [];
 var choicedevicecount = 0;
 var deviceid;
 var idtoken;
-function init() {
+function init()
+{
   showTable();
 }
-function showTable() {
+function showTable()
+{
   showload();
   $.when(
     TableGet("Daiso_Master")
-  ).done(function (data) {
+  ).done(function (data)
+  {
     showmain();
     obj = data;
     try {
       list = [];
-      Object.keys(obj).forEach((i) => { list.push(obj[i]) });
+      Object.keys(obj).forEach((i) => { list.push(obj[i]); });
       list.sort(funcCompare);
       $('#columns').columns({
         data: list,
@@ -28,18 +31,9 @@ function showTable() {
         ],
         size: 100,
         showRows: [-1, 30, 50, 100, 1000, 10000]
-      })
+      });
     } catch (e) {
       alert(e);
     }
-  })
-}
-function showload() {
-  $("#message").text("処理中")
-  $("#main").fadeOut(50);
-  $("#load").fadeIn(50);
-}
-function showmain() {
-  $("#load").fadeOut(50);
-  $("#main").fadeIn(50);
+  });
 }

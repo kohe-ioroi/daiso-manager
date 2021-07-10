@@ -1,7 +1,9 @@
-﻿function init() {
+﻿function init()
+{
     showload();
     $("#message").text("デバイスセットアップ...");
-    $("#jan_input").change((e) => {
+    $("#jan_input").change((e) =>
+    {
 
         if (regexTest(/([0-9]{8})|([0-9]{13})/, $("#jan_input").val())) {
             dbsearch($("#jan_input").val());
@@ -22,14 +24,16 @@
     }
 }
 
-function dbsearch(JAN) {
+function dbsearch(JAN)
+{
     showload();
     $("#message").text("データベース内を検索中");
     $.when(
         dataGet("Daiso_Master", "JAN", JAN),
         dataGet("Daiso_HTData", "JAN", JAN)
     ).done(
-        function (master, ht) {
+        function (master, ht)
+        {
             var data = master;
             var htdata = ht;
             if (Object.keys(data).length) {
@@ -60,7 +64,8 @@ function dbsearch(JAN) {
         }
     );
 }
-function insertData() {
+function insertData()
+{
     itemName = document.getElementById("itemName").value;
     JAN = document.getElementById("jan_input").value;
     Price = document.getElementById("price").value;
@@ -77,7 +82,8 @@ function insertData() {
             dataGet("Daiso_Master", "JAN", JAN),
             dataGet("Daiso", "JAN", JAN)
         ).done(
-            (func1, func2) => {
+            (func1, func2) =>
+            {
                 if (Object.keys(func1).length == 0) {
                     dataTargetInsert("Daiso_Master", JAN, data);
                     showPopup("データ書き込み完了");
@@ -88,7 +94,8 @@ function insertData() {
                 } else {
                     if (confirm("データはすでに存在します。上書きして良いですか？")) {
                         dataTargetInsert("Daiso_Master", JAN, data);
-                        Object.keys(func2).forEach((key) => {
+                        Object.keys(func2).forEach((key) =>
+                        {
                             dataPatch("Daiso", key, data);
                         });
                         showPopup("データ上書き完了");
@@ -102,12 +109,14 @@ function insertData() {
         );
     }
 };
-function resetData() {
+function resetData()
+{
     document.getElementById("itemName").value = "";
     document.getElementById("jan_input").value = "";
     document.getElementById("isDoubled").checked = false;
 }
-function delData(dataid) {
+function delData(dataid)
+{
     var dfd = $.Deferred();
     $.when(
         dataDelete("Daiso", dataid)
@@ -118,7 +127,8 @@ function delData(dataid) {
 
 }
 
-function getParam(name, url) {
+function getParam(name, url)
+{
     if (!url) url = window.location.href;
     name = name.replace(/[\[\]]/g, "\\$&");
     var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
@@ -127,12 +137,14 @@ function getParam(name, url) {
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
-function doubledCheck(JAN) {
+function doubledCheck(JAN)
+{
     var dfd = $.Deferred();
     $.when(
         dataGet("Main", "JAN", JAN)
     ).done(
-        function (data) {
+        function (data)
+        {
             if (Object.keys(data).length) {
                 document.getElementById("isDoubled").checked = true;
             } else {

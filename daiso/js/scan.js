@@ -8,16 +8,20 @@ var deviceid;
 var idtoken;
 
 //touchstart:スリープ判定/touchmove~:ズームと移動禁止
-function init() {
+function init()
+{
     window.addEventListener('touchstart', logTouchStart);
     document.addEventListener("touchmove", no_scroll, { passive: false });
     document.addEventListener("mousewheel", no_scroll, { passive: false });
     settingDevice();
 }
-function settingDevice() {
+function settingDevice()
+{
     navigator.mediaDevices.enumerateDevices()
-        .then(function (devices) {
-            devices.forEach(function (device) {
+        .then(function (devices)
+        {
+            devices.forEach(function (device)
+            {
                 if (device.kind == "videoinput") {
                     devicelist.push(device);
                 }
@@ -32,15 +36,18 @@ function settingDevice() {
             timeoutinit();
         });
 }
-function sendRequest(code) {
+function sendRequest(code)
+{
     $.when(
         dataGet("Daiso", "JAN", code)
-    ).done(function (data) {
+    ).done(function (data)
+    {
         displayData(data, code);
     });
 
 }
-function sendRequest_input() {
+function sendRequest_input()
+{
     janValue = document.getElementById("jancode").value;
     if (janValue == "*1234*") {
         url = new URL(location);
@@ -67,10 +74,13 @@ function sendRequest_input() {
     }
     else if (janValue == "*9999*") {
         alert("ログアウトします。");
-        firebase.auth().onAuthStateChanged((user) => {
-            firebase.auth().signOut().then(() => {
+        firebase.auth().onAuthStateChanged((user) =>
+        {
+            firebase.auth().signOut().then(() =>
+            {
             })
-                .catch((error) => {
+                .catch((error) =>
+                {
                     alert("ログアウトに失敗しました。");
                 });
         });
@@ -92,12 +102,14 @@ function sendRequest_input() {
         }
     }
 }
-function displayData(data, code) {
+function displayData(data, code)
+{
     console.log(Object.keys(data));
     if (Object.keys(data).length) {
         daibantext = "";
         jsondata = data;
-        Object.keys(jsondata).forEach(function (i) {
+        Object.keys(jsondata).forEach(function (i)
+        {
             fordata = jsondata[i];
             daibantext += ("\n台番:" + fordata["Daiban"] + " 段:" + fordata["Tana"] + " 列:" + fordata["Retu"]);
         });
@@ -125,21 +137,15 @@ function displayData(data, code) {
         startScanner(deviceid);
     }
 }
-function closeDialog() {
+function closeDialog()
+{
     document.querySelector('dialog').close();
     timeoutreset();
     showmain();
     startScanner(deviceid);
 }
-function showload() {
-    $("#main").fadeOut();
-    $("#load").fadeIn();
-}
-function showmain() {
-    $("#load").fadeOut();
-    $("#main").fadeIn();
-}
-function calc(isbn) {
+function calc(isbn)
+{
     const arrIsbn = isbn
         .toString()
         .split("")
@@ -147,7 +153,8 @@ function calc(isbn) {
     let remainder = 0;
     const checkDigit = arrIsbn.pop();
 
-    arrIsbn.forEach((num, index) => {
+    arrIsbn.forEach((num, index) =>
+    {
         remainder += num * (index % 2 === 0 ? 1 : 3);
     });
     remainder %= 10;
@@ -155,7 +162,8 @@ function calc(isbn) {
 
     return checkDigit === remainder;
 }
-Array.prototype.mode = function () {
+Array.prototype.mode = function ()
+{
     if (this.length === 0) {
         //配列の個数が0だとエラーを返す。
         throw new Error("配列の長さが0のため最頻値が計算できません");
@@ -190,7 +198,8 @@ Array.prototype.mode = function () {
     return maxValue;
 
 };
-function startScanner(_deviceid) {
+function startScanner(_deviceid)
+{
     scandata = [];
     document.getElementById("scanprogress").value = scandata.length;
     Quagga.init({
@@ -219,7 +228,8 @@ function startScanner(_deviceid) {
             halfSample: false,
             patchSize: "medium",
         }
-    }, function (err) {
+    }, function (err)
+    {
         if (err) {
             console.log(err);
             return;
@@ -233,7 +243,8 @@ function startScanner(_deviceid) {
 
     Quagga.onProcessed(function (result) { });
 
-    Quagga.onDetected(function (result) {
+    Quagga.onDetected(function (result)
+    {
         var code = result.codeResult.code;
         if (scandata.length < 5) {
             scandata.push(code);
@@ -249,42 +260,50 @@ function startScanner(_deviceid) {
         };
     });
 }
-function timeoutinit() {
+function timeoutinit()
+{
     checkOftimeoutFlag = false;
     timeout = setTimeout(readertimeout, timeoutmsec);
 }
-function timeoutreset() {
+function timeoutreset()
+{
     clearTimeout(timeout);
     timeoutinit();
 }
-function readertimeout() {
+function readertimeout()
+{
     checkOftimeoutFlag = true;
     Quagga.offProcessed();
     Quagga.offDetected();
     Quagga.stop();
     fade();
 }
-function readerrecover() {
+function readerrecover()
+{
     unfade();
     startScanner(deviceid);
     timeoutinit();
     checkOftimeoutFlag = false;
 }
-function logTouchStart() {
+function logTouchStart()
+{
     if (checkOftimeoutFlag) {
         return readerrecover();
     } else {
         return timeoutreset();
     }
 }
-function no_scroll(event) {
+function no_scroll(event)
+{
     event.preventDefault();
 }
-function fade() {
+function fade()
+{
     var target = document.getElementById("fadeLayer");
     target.style.visibility = "visible";
 }
-function unfade() {
+function unfade()
+{
     var target = document.getElementById("fadeLayer");
     target.style.visibility = "hidden";
 }
