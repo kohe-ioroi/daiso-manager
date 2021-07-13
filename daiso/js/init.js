@@ -18,17 +18,14 @@ const firebaseConfig = {
 if (firebase.apps.length === 0) {
 	firebase.initializeApp(firebaseConfig);
 }
-$(document).ready(() =>
-{
+$(document).ready(() => {
 	const appCheck = firebase.appCheck();
 	appCheck.activate('6Lc2oYgbAAAAAAY7PP-a4o6Z9kG6OcnCYW7XDZvL');
 });
 //認証シーケンス
-firebase.auth().onAuthStateChanged(function (user)
-{
+firebase.auth().onAuthStateChanged(function (user) {
 	if (user) {
-		firebase.auth().currentUser.getIdToken(true).then(function (idToken)
-		{
+		firebase.auth().currentUser.getIdToken(true).then(function (idToken) {
 			idtoken = idToken;
 			userid = firebase.auth().currentUser.email;
 			if (userid != "konan089@handy.app") {
@@ -48,19 +45,16 @@ firebase.auth().onAuthStateChanged(function (user)
 		);
 	}
 });
-function regexTest(regex, str)
-{
+function regexTest(regex, str) {
 	var REGEXP = new RegExp(regex);
 	return REGEXP.test(str);
 }
-function appendScript(URL)
-{
+function appendScript(URL) {
 	var el = document.createElement('script');
 	el.src = URL;
 	document.body.appendChild(el);
 };
-function getParam_init(name, url)
-{
+function getParam_init(name, url) {
 	if (!url) url = window.location.href;
 	name = name.replace(/[\[\]]/g, "\\$&");
 	var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
@@ -69,8 +63,7 @@ function getParam_init(name, url)
 	if (!results[2]) return '';
 	return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
-function funcCompare(a, b)
-{
+function funcCompare(a, b) {
 	if (a["Daiban"] < b["Daiban"]) return -1;
 	if (a["Daiban"] > b["Daiban"]) return 1;
 	if (a["Tana"] < b["Tana"]) return -1;
@@ -81,58 +74,48 @@ function funcCompare(a, b)
 }
 //下記よりCRUD命令
 //指定したデータを自動パスで追加(C)
-function dataInsert(path, data)
-{
+function dataInsert(path, data) {
 	var dfd = $.Deferred();
 	firebase.database().ref(path).push().set(data).then(
-		() =>
-		{
+		() => {
 			dfd.resolve();
 		}
 	);
 	return dfd.promise();
 }
 //指定したデータを指定パスで追加(C)
-function dataTargetInsert(path, target, data)
-{
+function dataTargetInsert(path, target, data) {
 	var dfd = $.Deferred();
 	firebase.database().ref(path + "/" + target).set(data).then(
-		() =>
-		{
+		() => {
 			dfd.resolve();
 		}
 	);
 	return dfd.promise();
 }
 //指定したキーで検索して取得(R)
-function dataGet(path, variable, data)
-{
+function dataGet(path, variable, data) {
 	var dfd = $.Deferred();
 	firebase.database().ref(path).orderByChild(variable).equalTo(data).once("value").then(
-		(i) =>
-		{
+		(i) => {
 			if (i.exists()) { dfd.resolve(i.val()); } else { dfd.resolve({}); }
 		});
 	return dfd.promise();
 }
 //指定したパスを取得(R)
-function getMaster(path, key)
-{
+function getMaster(path, key) {
 	var dfd = $.Deferred();
 	firebase.database().ref(path).orderByChild(key).once("value").then(
-		(i) =>
-		{
+		(i) => {
 			if (i.exists()) { dfd.resolve(i.val()); } else { dfd.resolve({}); }
 		});
 	return dfd.promise();
 }
 //指定したキーを指定データで上書き(U)
-function dataUpdate(path, key, data)
-{
+function dataUpdate(path, key, data) {
 	var dfd = $.Deferred();
 	firebase.database().ref(path).child(key).get().then(
-		(snapshot) =>
-		{
+		(snapshot) => {
 			if (snapshot.exists()) {
 				dataDelete(path, key);
 				dataInsert(path, data);
@@ -145,46 +128,38 @@ function dataUpdate(path, key, data)
 	return dfd.promise();
 }
 //指定したキーを指定差分データで更新(U)
-function dataPatch(path, key, data)
-{
+function dataPatch(path, key, data) {
 	var dfd = $.Deferred();
 	firebase.database().ref(path).child(key).update(data).then(
-		() =>
-		{
+		() => {
 			dfd.resolve();
 		}
 	);
 	return dfd.promise();
 }
 //指定したキーを削除(D)
-function dataDelete(path, key)
-{
+function dataDelete(path, key) {
 	var dfd = $.Deferred();
 	firebase.database().ref(path + "/" + key).remove().then(
-		() =>
-		{
+		() => {
 			dfd.resolve();
 		}
 	);
 	return dfd.promise();
 }
 //指定したパスのデータをすべて取得
-function TableGet(path)
-{
+function TableGet(path) {
 	var dfd = $.Deferred();
 	firebase.database().ref(path).once("value").then(
-		(i) =>
-		{
+		(i) => {
 			if (i.exists()) { dfd.resolve(i.val()); } else { dfd.resolve({}); }
 		});
 	return dfd.promise();
 }
 
 
-window.onbeforeprint = () =>
-{
-	$("[name=JANCODE]").each((index, element) =>
-	{
+window.onbeforeprint = () => {
+	$("[name=JANCODE_INFOMATION]").each((index, element) => {
 		if (String($(element).text()).length == 13) {
 			$(element).barcode(String($(element).text()), "ean13", { barWidth: 1, barHeight: 20 });
 		} else if (String($(element).text()).length == 8) {
@@ -194,8 +169,7 @@ window.onbeforeprint = () =>
 };
 
 //メッセージウインドウを作成。５秒後に自動で消滅する。
-function showPopup(msg)
-{
+function showPopup(msg) {
 	if (typeof popuptimer != "undefined") {
 		clearTimeout(popuptimer);
 	}
@@ -204,22 +178,18 @@ function showPopup(msg)
 	$('.popup').on("click", () => { $('.popup').removeClass('js_active'); });
 	popuptimer = setTimeout(() => { $('.popup').removeClass('js_active'); }, 5000);
 }
-function showload()
-{
+function showload() {
 	showPopup("処理中...");
 	$("input").prop('disabled', true);
 }
-function showmain()
-{
+function showmain() {
 	$('.popup').removeClass('js_active');
 	$("input").prop('disabled', false);
 }
-function no_scroll(event)
-{
+function no_scroll(event) {
 	event.preventDefault();
 }
-function nextfeild(str)
-{
+function nextfeild(str) {
 	if (str.value.length >= str.maxLength) {
 		for (var i = 0, elm = str.form.elements; i < elm.length; i++) {
 			if (elm[i] == str) {
@@ -231,10 +201,8 @@ function nextfeild(str)
 	return (str);
 }
 
-function nextfieldALL()
-{
-	$('input').on("keyup", function (e)
-	{
+function nextfieldALL() {
+	$('input').on("keyup", function (e) {
 		var n = $("input").length;
 		if (e.which == 13) {
 			e.preventDefault();
@@ -274,10 +242,22 @@ function nextfieldALL()
 		}
 	});
 }
-function focustoselectALL()
-{
-	$("input").focus(() =>
-	{
+function focustoselectALL() {
+	$("input").focus(() => {
 		$(this).select();
 	});
+}
+function checkStock() {
+	$.each($("[name='JANCODE_INFOMATION']"), (i, val) => {
+		$.when(dataGet("Daiso_HTData", "JAN", val.innerText)).done((data) => {
+			if (Object.keys(data).length) {
+				if (data[Object.keys(data)[0]]["isStock"] == false) {
+					$(val.parentNode.parentNode).css("background-color", "#FA817D")
+				}
+			} else {
+				$(val.parentNode.parentNode).css("background-color", "#DDFFDD")
+			}
+		})
+	})
+	showPopup("検査完了。赤→在庫なし、緑→データなし")
 }

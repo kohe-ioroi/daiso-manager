@@ -1,14 +1,27 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Page Not Found</title>
-  </head>
-  <body>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page Not Found</title>
+</head>
+
+<body>
+  <center>
     <div id="message">
       <p>404 NOT FOUND</p><br>
+
       <img src="https://http.cat/404.jpg">
+      <p>
+
+        ファイルが見つかりませんでした。5秒後にトップページに戻ります...
+      </p>
+      <script>
+        setTimeout(() => { location.href = "/" }, 5000)
+      </script>
     </div>
-  </body>
+  </center>
+</body>
+
 </html>

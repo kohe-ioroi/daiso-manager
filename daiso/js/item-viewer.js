@@ -3,33 +3,27 @@ var devicelist = [];
 var choicedevicecount = 0;
 var deviceid;
 var idtoken;
-function init()
-{
-  window.onbeforeprint = () =>
-  {
+function init() {
+  window.onbeforeprint = () => {
     $("form").hide();
   };
-  window.onafterprint = () =>
-  {
+  window.onafterprint = () => {
     $("form").show();
   };
 }
 
-function doWork(DB)
-{
+function doWork(DB) {
   var Daiban = DB.padStart(4, "0");
   $('#search').val(Daiban);
   $("table").remove();
   $('#search').prop('disabled', true);
   document.title = "台番:" + Daiban;
-  dataGet("Daiso", "Daiban", Daiban).then((data) =>
-  {
+  dataGet("Daiso", "Daiban", Daiban).then((data) => {
     var list = [];
     Object.keys(data).forEach((i) => { list.push(data[i]); });
     list.sort(funcCompare);
     var [mTana, mRetu] = [1, 1];
-    list.forEach((key) =>
-    {
+    list.forEach((key) => {
       if (parseInt(key["Tana"]) > mTana) {
         mTana = 1 + parseInt(key["Tana"]);
       }
@@ -43,8 +37,7 @@ function doWork(DB)
     for (var i = 0; i < mTana; i++) {
       var row = document.createElement("tr");
       for (var j = 0; j < mRetu; j++) {
-        list.forEach((e) =>
-        {
+        list.forEach((e) => {
           if (parseInt(e["Tana"]) == (i + 1) && parseInt(e["Retu"]) == (j + 1)) {
             var cell = document.createElement("td");
             var cellText = document.createElement("div");
@@ -56,7 +49,7 @@ function doWork(DB)
             if (e["isFood"]) {
               infotxt += " / 食";
             }
-            cellText.innerHTML = e["Daiban"] + "-" + (i + 1) + "-" + (j + 1) + " / " + e["Price"] + infotxt + " <br><a href='javascript:void(0);' onclick='window.open(\"/master.html?jan=" + e["JAN"] + "\")'>" + e["ItemName"] + "</a><br><center><div name='JANCODE'>" + e["JAN"] + "</div></center>";
+            cellText.innerHTML = e["Daiban"] + "-" + (i + 1) + "-" + (j + 1) + " / " + e["Price"] + infotxt + " <br><a href='javascript:void(0);' onclick='window.open(\"/master.html?jan=" + e["JAN"] + "\")'>" + e["ItemName"] + "</a><br><center><div name='JANCODE_IMFOMATION'>" + e["JAN"] + "</div></center>";
             cell.appendChild(cellText);
             row.appendChild(cell);
           }
@@ -72,8 +65,7 @@ function doWork(DB)
     tbl.appendChild(tblBody);
     tbl.setAttribute("class", "splitForPrint");
     body.appendChild(tbl);
-    $("[name=JANCODE]").each((index, element) =>
-    {
+    $("[name=JANCODE]").each((index, element) => {
       if (String($(element).text()).length == 13) {
         $(element).barcode(String($(element).text()), "ean13", { barWidth: 1, barHeight: 10, output: "svg" });
       } else if (String($(element).text()).length == 8) {

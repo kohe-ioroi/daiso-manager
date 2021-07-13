@@ -3,8 +3,7 @@ var devicelist = [];
 var choicedevicecount = 0;
 var deviceid;
 var idtoken;
-function showTable(val, val2)
-{
+function showTable(val, val2) {
   datalist = {};
   if (parseInt(val) > parseInt(val2)) {
     alert("開始ページを終了ページより大きくすることはできません。");
@@ -19,15 +18,13 @@ function showTable(val, val2)
   showload();
   $.when(TableGet("Daiso")
   ).done(
-    (data) =>
-    {
+    (data) => {
       lists = [];
       putdata = {};
       for (i = parseInt(val); i < parseInt(val2) + 1; i++) {
         lists.push(i.toString().padStart(4, "0"));
       }
-      Object.keys(data).forEach((key) =>
-      {
+      Object.keys(data).forEach((key) => {
         if (lists.includes(data[key]["Daiban"])) {
           putdata[key] = data[key];
         }
@@ -51,7 +48,7 @@ function showTable(val, val2)
           search: false,
           schema: [
             { "header": "商品名", "key": "ItemName" },
-            { "header": "JANコード", "key": "JAN", "template": '<div name="JANCODE">{{JAN}}</div>' },
+            { "header": "JANコード", "key": "JAN", "template": '<div name="JANCODE_INFOMATION">{{JAN}}</div>' },
             { "header": "価格", "key": "Price" },
             { "header": "台番", "key": "Daiban" },
             { "header": "段", "key": "Tana" },
@@ -67,30 +64,25 @@ function showTable(val, val2)
   );
 
 }
-function init()
-{
-  document.getElementById("search").onkeypress = (e) =>
-  {
+function init() {
+  document.getElementById("search").onkeypress = (e) => {
     $("#search").val($("#search").val().replace(/[^0-9]/g, ''));
     key = e.keyCode || e.charCode || 0;
     if (key == 13) {
       showTable($('#search').val(), $('#search2').val());
     }
   };
-  document.getElementById("search2").onkeypress = (e) =>
-  {
+  document.getElementById("search2").onkeypress = (e) => {
     $("#search2").val($("#search2").val().replace(/[^0-9]/g, ''));
     key = e.keyCode || e.charCode || 0;
     if (key == 13) {
       showTable($('#search').val(), $('#search2').val());
     }
   };
-  $("#search").change(() =>
-  {
+  $("#search").change(() => {
     $("#search").val($("#search").val().replace(/[^0-9]/g, ''));
   });
-  $("#search2").change(() =>
-  {
+  $("#search2").change(() => {
     $("#search2").val($("#search2").val().replace(/[^0-9]/g, ''));
   });
 }
