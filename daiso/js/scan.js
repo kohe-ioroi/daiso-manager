@@ -104,9 +104,11 @@ function displayData(data, code, info) {
         });
         if (Object.keys(info).length) {
             isStock = info[Object.keys(info)[0]]["isStock"];
+        } else {
+            isStock = false;
         }
         maindata = jsondata[Object.keys(jsondata)[0]];
-        stockcheck = "不可";
+        stockcheck = "不可/本社データなし";
         pbcheck = "X";
         dbcheck = "X";
         fdcheck = "X";
