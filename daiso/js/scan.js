@@ -94,13 +94,19 @@ function sendRequest_input() {
     }
 }
 function displayData(data, code, info) {
+    $("#modal_Bumon").text("")
+    $("#modal_ItemName").text("")
+    $("#modal_Image").attr("src", "/images/loading.gif")
+    $("#modal_Checker").text("")
+    $("#modal_Price").text("")
+    $("#modal_Daiban").text("")
     console.log(Object.keys(data));
     if (Object.keys(data).length) {
         daibantext = "";
         jsondata = data;
         Object.keys(jsondata).forEach(function (i) {
             fordata = jsondata[i];
-            daibantext += ("\n台番:" + fordata["Daiban"] + " 段:" + fordata["Tana"] + " 列:" + fordata["Retu"]);
+            daibantext += ("<br>台番:" + fordata["Daiban"] + " 段:" + fordata["Tana"] + " 列:" + fordata["Retu"]);
         });
         if (Object.keys(info).length) {
             isStock = info[Object.keys(info)[0]]["isStock"];
@@ -108,7 +114,7 @@ function displayData(data, code, info) {
             isStock = false;
         }
         maindata = jsondata[Object.keys(jsondata)[0]];
-        stockcheck = "不可/本社データなし";
+        stockcheck = "NG";
         pbcheck = "X";
         dbcheck = "X";
         fdcheck = "X";
@@ -118,21 +124,37 @@ function displayData(data, code, info) {
         if (maindata["PB"] == 1) { pbcheck = "O"; };
         if (maindata["isDoubled"] == 1) { dbcheck = "O"; };
         if (maindata["isFood"] == 1) { fdcheck = "O"; };
-        alert("部門:ダイソー" + "\nJANコード:" + maindata["JAN"] + "\n商品名:" + maindata["ItemName"] + "\n発注:" + stockcheck + "\n価格:" + maindata["Price"] + "\n競合判定:" + dbcheck + "\n食品判定:" + fdcheck + "\n" + daibantext);
-        timeoutreset();
-        showmain();
-        startScanner(deviceid);
-        // document.querySelector("#bumon").innerText = "ダイソー";
-        // document.querySelector("#JAN").innerText = maindata["JAN"];
-        // document.querySelector("#price").innerText = maindata["Price"];
-        // document.querySelector("#isfood").innerText = fdcheck;
-        // document.querySelector("#isdoubled").innerText = dbcheck;
-        // document.querySelector("#item_data").innerText = daibantext;
-        // document.querySelector('dialog').showModal();
+        $('.js-modal').fadeIn();
+        $("#modal_Bumon").text("部門:ダイソー JAN:" + maindata["JAN"])
+        $("#modal_ItemName").text("品名:" + maindata["ItemName"])
+        $("#modal_Image").attr("src", "/images/ItemCD/" + maindata["JAN"] + ".jpg")
+        $("#modal_Image").on('error', () => {
+            $("#modal_Image").attr("src", "/images/no-image.png")
+        })
+        $("#modal_Checker").text("発注:" + stockcheck + " 競合:" + dbcheck + " 食品:" + fdcheck)
+        $("#modal_Price").text("価格:" + maindata["Price"])
+        $("#modal_Daiban").html(daibantext)
     } else {
-        alert("検索しましたがデータが見つかりませんでした。\nJANコードが一致しているか確認してください。\nJANコード:" + code);
-        showmain();
-        startScanner(deviceid);
+        if (Object.keys(info).length) {
+            data = info[Object.keys(info)[0]]
+            isStock = data["isStock"];
+            $('.js-modal').fadeIn();
+            $("#modal_Bumon").text("部門:ダイソー JAN:" + data["JAN"])
+            $("#modal_ItemName").text("品名:" + data["ItemName"])
+            $("#modal_Image").attr("src", "/images/ItemCD/" + data["JAN"] + ".jpg")
+            $("#modal_Image").on('error', () => {
+                $("#modal_Image").attr("src", "/images/no-image.png")
+            })
+            $("#modal_Checker").text("発注:" + stockcheck)
+            $("#modal_Price").text("価格:不明")
+            $("#modal_Daiban").html("<h1><font color='red'>店舗登録なし</font></h1>")
+        } else {
+            alert("検索しましたがデータが見つかりませんでした。\nJANコードが一致しているか確認してください。\nJANコード:" + code);
+            showmain();
+            startScanner(deviceid);
+        }
+
+
     }
 }
 function closeDialog() {
