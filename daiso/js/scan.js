@@ -242,8 +242,8 @@ function startScanner(_deviceid) {
                 codeRepetition: true,
                 tryVertical: true,
                 frameRate: 10,
-                width: 600,
-                height: 600,
+                width: 800,
+                height: 800,
                 deviceId: _deviceid
             },
         },
@@ -273,7 +273,7 @@ function startScanner(_deviceid) {
 
     Quagga.onDetected(function (result) {
         var code = result.codeResult.code;
-        if (scandata.length < 5) {
+        if (scandata.length < 10) {
             scandata.push(code);
             $("#scanprogress").val(scandata.length);
         }
