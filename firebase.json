@@ -11,6 +11,15 @@
         "**/.*",
         "**/node_modules/**"
       ]
+    },
+    {
+      "target": "HANDY",
+      "public": "konan089",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ]
     }
   ]
 }

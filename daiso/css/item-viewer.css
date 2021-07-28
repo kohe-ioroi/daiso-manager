@@ -203,7 +203,7 @@ table td {
 a {
   text-decoration:none; 
 }
-div[name="JANCODE"]{
+div[name="JANCODE_INFOMATION"]{
   position:absolute;
   bottom:0;
   left: 50%;

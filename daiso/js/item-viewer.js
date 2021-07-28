@@ -49,7 +49,7 @@ function doWork(DB) {
             if (e["isFood"]) {
               infotxt += " / 食";
             }
-            cellText.innerHTML = e["Daiban"] + "-" + (i + 1) + "-" + (j + 1) + " / " + e["Price"] + infotxt + " <br><a href='javascript:void(0);' onclick='window.open(\"/master.html?jan=" + e["JAN"] + "\")'>" + e["ItemName"] + "</a><br><center><div name='JANCODE_IMFOMATION'>" + e["JAN"] + "</div></center>";
+            cellText.innerHTML = e["Daiban"] + "-" + (i + 1) + "-" + (j + 1) + " / " + e["Price"] + infotxt + " <br><a href='javascript:void(0);' onclick='window.open(\"/master.html?jan=" + e["JAN"] + "\")'>" + e["ItemName"] + "</a><br><center><div name='JANCODE_INFOMATION'>" + e["JAN"] + "</div></center>";
             cell.appendChild(cellText);
             row.appendChild(cell);
           }
@@ -65,11 +65,11 @@ function doWork(DB) {
     tbl.appendChild(tblBody);
     tbl.setAttribute("class", "splitForPrint");
     body.appendChild(tbl);
-    $("[name=JANCODE]").each((index, element) => {
+    $("[name=JANCODE_INFOMATION]").each((index, element) => {
       if (String($(element).text()).length == 13) {
-        $(element).barcode(String($(element).text()), "ean13", { barWidth: 1, barHeight: 10, output: "svg" });
+        $(element).barcode(String($(element).text()), "ean13", { barWidth: 1, barHeight: 15 });
       } else if (String($(element).text()).length == 8) {
-        $(element).barcode(String($(element).text()), "ean8", { barWidth: 1, barHeight: 10, output: "svg" });
+        $(element).barcode(String($(element).text()), "ean8", { barWidth: 1, barHeight: 15 });
       }
     });
     $('#search').prop('disabled', false);

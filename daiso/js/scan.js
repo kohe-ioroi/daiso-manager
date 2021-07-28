@@ -100,7 +100,6 @@ function displayData(data, code, info) {
     $("#modal_Checker").text("")
     $("#modal_Price").text("")
     $("#modal_Daiban").text("")
-    console.log(Object.keys(data));
     if (Object.keys(data).length) {
         daibantext = "";
         jsondata = data;
@@ -124,30 +123,45 @@ function displayData(data, code, info) {
         if (maindata["PB"] == 1) { pbcheck = "O"; };
         if (maindata["isDoubled"] == 1) { dbcheck = "O"; };
         if (maindata["isFood"] == 1) { fdcheck = "O"; };
-        $('.js-modal').fadeIn();
         $("#modal_Bumon").text("部門:ダイソー JAN:" + maindata["JAN"])
         $("#modal_ItemName").text("品名:" + maindata["ItemName"])
-        $("#modal_Image").attr("src", "/images/ItemCD/" + maindata["JAN"] + ".jpg")
+        $("#modal_Image").attr("src", "https://konan089-a83b7.firebaseapp.com/ItemCD/" + maindata["JAN"] + ".jpg")
         $("#modal_Image").on('error', () => {
             $("#modal_Image").attr("src", "/images/no-image.png")
         })
         $("#modal_Checker").text("発注:" + stockcheck + " 競合:" + dbcheck + " 食品:" + fdcheck)
         $("#modal_Price").text("価格:" + maindata["Price"])
         $("#modal_Daiban").html(daibantext)
+        $('.js-modal').fadeIn();
     } else {
         if (Object.keys(info).length) {
             data = info[Object.keys(info)[0]]
-            isStock = data["isStock"];
-            $('.js-modal').fadeIn();
+            if (Object.keys(info).length) {
+                try {
+                    isStock = info[Object.keys(info)[0]]["isStock"];
+                } catch {
+                    isStock = "invalid"
+                }
+            } else {
+                isStock = false;
+            }
+            if (isStock == true) {
+                stockcheck = "OK"
+            } else if (isStock == "invalid") {
+                stockcheck = "参照エラー"
+            } else {
+                stockcheck = "NG"
+            }
             $("#modal_Bumon").text("部門:ダイソー JAN:" + data["JAN"])
             $("#modal_ItemName").text("品名:" + data["ItemName"])
-            $("#modal_Image").attr("src", "/images/ItemCD/" + data["JAN"] + ".jpg")
+            $("#modal_Image").attr("src", "https://konan089-a83b7.firebaseapp.com/ItemCD/" + data["JAN"] + ".jpg")
             $("#modal_Image").on('error', () => {
                 $("#modal_Image").attr("src", "/images/no-image.png")
             })
             $("#modal_Checker").text("発注:" + stockcheck)
             $("#modal_Price").text("価格:不明")
             $("#modal_Daiban").html("<h1><font color='red'>店舗登録なし</font></h1>")
+            $('.js-modal').fadeIn();
         } else {
             alert("検索しましたがデータが見つかりませんでした。\nJANコードが一致しているか確認してください。\nJANコード:" + code);
             showmain();
