@@ -273,18 +273,20 @@ function startScanner(_deviceid) {
 
     Quagga.onDetected(function (result) {
         var code = result.codeResult.code;
-        if (scandata.length < 10) {
-            scandata.push(code);
-            $("#scanprogress").val(scandata.length);
+        if (["45", "49"].indexOf(String(code).slice(0, 2)) != -1) {
+            if (scandata.length < 10) {
+                scandata.push(code);
+                $("#scanprogress").val(scandata.length);
+            }
+            else {
+                $("#scanprogress").val(scandata.length);
+                Quagga.offProcessed();
+                Quagga.offDetected();
+                Quagga.stop();
+                showload();
+                sendRequest(scandata.mode());
+            };
         }
-        else {
-            $("#scanprogress").val(scandata.length);
-            Quagga.offProcessed();
-            Quagga.offDetected();
-            Quagga.stop();
-            showload();
-            sendRequest(scandata.mode());
-        };
     });
 }
 function timeoutinit() {

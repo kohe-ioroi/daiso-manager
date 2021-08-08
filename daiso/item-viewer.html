@@ -25,6 +25,16 @@
 <body class="blurBg-false" style="background-color:#EBEBEB;height:110%">
     <p class="popup">MSG</p>
     <div id="firebaseui-auth-container"></div>
+    <div class="hideme" id="footer-scan">
+        <div id="footer">
+            <div class="fixed_buttonarea">
+                <button class="hideme fixed_buttons" onclick="showOrder();">発注表示</button>
+                <button id="ordermode" class="hideme fixed_buttons" onclick="changeOrderMode();">発ﾓｰﾄﾞ</button>
+                <button class="hideme fixed_buttons" onclick="downloadOrder();">発注DL</button>
+                <button class="hideme fixed_buttons" onclick="deleteOrder();">全取り消し</button>
+            </div>
+        </div>
+    </div>
     <div class="hideme" id="main" STYLE="text-align:center;">
         <form onsubmit="doWork($('#search').val());return false;">
             <h1>商品一覧出力</h1>
@@ -32,7 +42,6 @@
         </form>
     </div>
     <div class="hideme" id="columns"></div>
-
 </body>
 
 </html>

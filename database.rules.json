@@ -44,6 +44,13 @@
       ".indexOn": [
         "JAN"
       ]
+    },
+    "Daiso_Order": {
+      ".read": "auth !== null",
+      ".write": "auth !== null",
+      ".indexOn": [
+        "JAN"
+      ]
     }
   }
 }
